@@ -1,0 +1,22 @@
+version: '3'
+services:
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    environment:
+      - AWS_ACCESS_KEY_ID=id_key
+      - AWS_SECRET_ACCESS_KEY=access_key
+      - DYNAMO_ENDPOINT=database:8000
+    ports:
+      - "8001:8001"
+    depends_on:
+      - database
+    links:
+      - database
