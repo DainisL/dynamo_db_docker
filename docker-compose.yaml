@@ -12,6 +12,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - AWS_ACCESS_KEY_ID=id_key
+      - AWS_REGION=eu-west-1
       - AWS_SECRET_ACCESS_KEY=access_key
       - DYNAMO_ENDPOINT=database:8000
     ports:
