@@ -1,11 +1,17 @@
 version: '3'
 services:
-  database:
+  dynamo-db:
     build:
-      context: ./database
+      context: ./databases/dynamo-db
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+  redis-db:
+    build:
+      context: ./databases/redis-db
+      dockerfile: Dockerfile
+    ports:
+      - "6379:6379"
   ui:
     build:
       context: ./ui
@@ -18,6 +24,6 @@ services:
     ports:
       - "8001:8001"
     depends_on:
-      - database
+      - dynamo-db
     links:
-      - database
+      - dynamo-db
