@@ -12,9 +12,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "6379:6379"
-  ui:
+  dynamodb-admin:
     build:
-      context: ./ui
+      context: ./ui/dynamodb-admin
       dockerfile: Dockerfile
     environment:
       - AWS_ACCESS_KEY_ID=id_key
@@ -27,3 +27,14 @@ services:
       - dynamo-db
     links:
       - dynamo-db
+  redis-commander:
+    build:
+      context: ./ui/redis-commander
+      dockerfile: Dockerfile
+    command: --redis-host redis-db
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis-db
+    links:
+      - redis-db

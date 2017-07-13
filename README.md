@@ -1,5 +1,21 @@
 # Dynamo db docker
 
+## URL
+
+### dynamodb admin UI
+```
+http://localhost:8001/
+```
+
+### dynamodb shel
+```
+http://localhost:8000/shel
+```
+
+### Redis Commander
+```
+http://localhost:8081
+```
 
 ### Run
 
