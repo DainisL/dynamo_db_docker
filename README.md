@@ -2,14 +2,14 @@
 
 ## URL
 
-### dynamodb admin UI
+### DynamoDB admin UI
 ```
 http://localhost:8001/
 ```
 
-### dynamodb shel
+### DynamoDB shell
 ```
-http://localhost:8000/shel
+http://localhost:8000/shell
 ```
 
 ### Redis Commander
