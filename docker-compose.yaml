@@ -1,11 +1,11 @@
-version: '3'
+version: '2'
 services:
   dynamo-db:
     build:
       context: ./databases/dynamo-db
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "7000:8000"
   redis-db:
     build:
       context: ./databases/redis-db
@@ -20,9 +20,9 @@ services:
       - AWS_ACCESS_KEY_ID=id_key
       - AWS_REGION=eu-west-1
       - AWS_SECRET_ACCESS_KEY=access_key
-      - DYNAMO_ENDPOINT=dynamo-db:8000
+      - DYNAMO_ENDPOINT=dynamo-db:7000
     ports:
-      - "8001:8001"
+      - "8801:8001"
     depends_on:
       - dynamo-db
     links:
@@ -33,8 +33,39 @@ services:
       dockerfile: Dockerfile
     command: --redis-host redis-db
     ports:
-      - "8081:8081"
+      - "8081:8881"
     depends_on:
       - redis-db
     links:
       - redis-db
+  kong-database:
+    image: postgres:9.6
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=kong
+      - POSTGRES_DB=kong
+  kong:
+    restart: always
+    image: kong:latest
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "7946:7946"
+      - "7946:7946/udp"
+    depends_on:
+      - kong-database
+    links:
+      - kong-database
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-database
+  kong-dashboard:
+    image: pgbi/kong-dashboard:v2.2.0
+    ports:
+      - "8080:8080"
+    links:
+      - kong
+    depends_on:
+      - kong
