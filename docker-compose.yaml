@@ -4,6 +4,10 @@ services:
     build:
       context: ./databases/dynamo-db
       dockerfile: Dockerfile
+    environment:
+      - AWS_ACCESS_KEY_ID=id_key
+      - AWS_REGION=eu-west-1
+      - AWS_SECRET_ACCESS_KEY=access_key
     ports:
       - "7000:8000"
   redis-db:
