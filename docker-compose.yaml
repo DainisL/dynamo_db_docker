@@ -37,7 +37,7 @@ services:
       dockerfile: Dockerfile
     command: --redis-host redis-db
     ports:
-      - "8081:8881"
+      - "8081:8081"
     depends_on:
       - redis-db
     links:
